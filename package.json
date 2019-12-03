@@ -2,6 +2,7 @@
   "name": "uic-emotions",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://uic-emotions.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "formik": "^2.0.6",
