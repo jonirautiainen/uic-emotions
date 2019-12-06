@@ -11,7 +11,9 @@ const Signup = () => (
   <AuthConsumer>
     {({ signup }) => (
       <div className={styles['container']}>
-        <h1>SIGNUP</h1>
+        <h2 className={styles['title']}>
+          Create Account
+        </h2>
         <Formik
           initialValues={{
             givenName: '',
