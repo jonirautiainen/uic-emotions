@@ -28,7 +28,10 @@ const Signup = () => (
           }}
         >
           {({ handleSubmit, values, handleChange }) => (
-            <form onSubmit={handleSubmit}>
+            <form 
+              onSubmit={handleSubmit}
+              className={styles['form']}
+            >
               {[
                 {
                   label: 'Given Name',
@@ -53,6 +56,7 @@ const Signup = () => (
               ].map(({ label, name, type }) => (
                 <div key={name} className={styles['input-container']}>
                   <TextField
+                    fullWidth
                     name={name}
                     type={type}
                     label={label}
