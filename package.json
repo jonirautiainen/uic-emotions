@@ -5,6 +5,7 @@
   "homepage": "https://uic-emotions.herokuapp.com/",
   "dependencies": {
     "@material-ui/core": "^4.7.1",
+    "@material-ui/icons": "^4.5.1",
     "formik": "^2.0.6",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",

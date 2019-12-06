@@ -6,6 +6,10 @@ import Account from './views/Account'
 import Home from './views/Home'
 import Summary from './views/Summary'
 
+import SentimentVerySatisfiedRoundedIcon from '@material-ui/icons/SentimentVerySatisfiedRounded';
+import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
+import HomeRoundedIcon from '@material-ui/icons/HomeRounded';
+
 export default [
   {
     component: Login,
@@ -28,20 +32,23 @@ export default [
     authRequired: true,
     path: '/',
     exact: true,
-    title: 'Home'
+    title: 'Home',
+    icon: HomeRoundedIcon
   },
   {
     component: Summary,
     layout: Private,
     authRequired: true,
     path: '/summary',
-    title: 'Summary'
+    title: 'Summary',
+    icon: SentimentVerySatisfiedRoundedIcon
   },
   {
     component: Account,
     layout: Private,
     authRequired: true,
     path: '/account',
-    title: 'Account'
+    title: 'Account',
+    icon: PersonRoundedIcon
   }
 ]

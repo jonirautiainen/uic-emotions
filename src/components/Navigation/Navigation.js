@@ -1,20 +1,52 @@
-import React from 'react'
-import Button from '@material-ui/core/Button'
+import React, {useState} from 'react'
+import BottomNavigation from '@material-ui/core/BottomNavigation'
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction'
 import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import { makeStyles } from '@material-ui/core/styles';
 import routes from '../../routes'
 
 import styles from './Navigation.module.scss'
 
-const Navigation = () => (
-  <div className={styles['container']}>
-    {routes
-      .filter(({ authRequired }) => authRequired)
-      .map(({ title, path }) => (
-        <Button key={path} component={Link} to={path}>
-          {title}
-        </Button>
-      ))}
-  </div>
-)
+const useStyles = makeStyles({
+  nav: {
+    backgroundColor: 'white',
+    boxShadow: ''
+  },
+});
 
-export default Navigation
+const Navigation = ({location}) => {
+
+  const classes = useStyles();
+const [value, setValue] = useState(location.pathname);
+const handleChange = (event, newValue) => {
+  setValue(newValue);
+};
+
+return (
+
+  <div className={styles['container']}>
+    <BottomNavigation
+      className={classes.nav}
+      showLabels
+      value={value} 
+      onChange={handleChange}
+    >
+      {routes
+        .filter(({ authRequired }) => authRequired)
+        .map(({ title, path, icon: Icon }) => (
+          <BottomNavigationAction 
+            key={path} 
+            component={Link} 
+            to={path} 
+            label={title} 
+            value={path} 
+            icon={<Icon/>} 
+          />
+        ))}
+    </BottomNavigation>
+  </div>
+
+)
+}
+export default withRouter(Navigation)
