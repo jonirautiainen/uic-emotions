@@ -3,9 +3,12 @@ import React, { Component } from 'react'
 const { Provider, Consumer } = React.createContext()
 
 const exampleUser = {
-  givenName: 'Donald',
-  familyName: 'Trump',
-  email: 'donald.trump@usa.com'
+  givenName: 'Pekka',
+  familyName: 'Pouta',
+  email: 'pekka.pouta@mtv.fi',
+  phone: '',
+  age: '',
+  sex: 'male'
 }
 
 class AuthProvider extends Component {
@@ -64,7 +67,7 @@ class AuthProvider extends Component {
   }
 
   addReport = () => {
-    this.setState({ reportsToday: this.state.reportsToday+1 })
+    this.setState({ reportsToday: this.state.reportsToday + 1 })
   }
 
   render() {
