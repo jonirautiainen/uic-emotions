@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { AuthConsumer } from '../../Auth'
+import { Formik } from 'formik'
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import {
   Card,
   CardHeader,
@@ -13,9 +16,30 @@ import {
 
 const Account = () => (
   <AuthConsumer>
-    {({ user, logout, handleName }) => (
+    {({ user, logout, updateUser }) => (
       <Card>
-        <form autoComplete="off" noValidate>
+        <Formik
+      initialValues={{
+        givenName: user.givenName || '',
+        familyName: user.familyName || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        age: user.age ||'',
+        sex: user.sex || ''
+      }}
+      onSubmit={(values) => {
+        updateUser({
+          givenName: values.givenName,
+          familyName: values.familyName,
+          email: values.email,
+          phone: values.phone,
+          age: values.age,
+          sex: values.sex
+        })
+      }}
+    >
+      {({ handleSubmit, values, handleChange, setFieldValue }) => (
+        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
           <CardHeader
             subheader="The information can be edited"
             title="Profile"
@@ -29,10 +53,10 @@ const Account = () => (
                   helperText="Please specify the first name"
                   label="First name"
                   margin="dense"
-                  name="firstName"
-                  onChange={handleName}
+                  name="givenName"
+                  onChange={handleChange}
                   required
-                  value={user.givenName}
+                  value={values.givenName}
                   variant="outlined"
                 />
               </Grid>
@@ -41,10 +65,11 @@ const Account = () => (
                   fullWidth
                   label="Last name"
                   margin="dense"
-                  name="lastName"
+                  name="familyName"
                   required
-                  value={user.familyName}
+                  value={values.familyName}
                   variant="outlined"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -54,9 +79,20 @@ const Account = () => (
                   margin="dense"
                   name="email"
                   required
-                  value={user.email}
+                  value={values.email}
                   variant="outlined"
+                  onChange={handleChange}
                 />
+              </Grid>
+              <Grid item md={6} xs={12}>
+                <Select margin="dense" fullWidth variant="outlined" name='sex' value={values.sex} onChange={handleChange} displayEmpty>
+                  <MenuItem value="">
+                    Select sex
+                  </MenuItem>
+                  <MenuItem value={'male'}>Male</MenuItem>
+                  <MenuItem value={'female'}>Female</MenuItem>
+                  <MenuItem value={'other'}>Other</MenuItem>
+                </Select>
               </Grid>
               <Grid item md={6} xs={12}>
                 <TextField
@@ -65,8 +101,9 @@ const Account = () => (
                   margin="dense"
                   name="phone"
                   type="number"
-                  value={user.phone}
+                  value={values.phone}
                   variant="outlined"
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item md={6} xs={12}>
@@ -76,8 +113,9 @@ const Account = () => (
                   margin="dense"
                   name="age"
                   type="number"
-                  value={user.age}
+                  value={values.age}
                   variant="outlined"
+                  onChange={handleChange}
                 />
               </Grid>
             </Grid>
@@ -85,7 +123,7 @@ const Account = () => (
           <Divider />
           <Grid>
             <CardActions>
-              <Button color="primary" variant="contained" fullWidth>
+              <Button type='submit' color="primary" variant="contained" fullWidth>
                 Save details
               </Button>
               <Button
@@ -99,6 +137,8 @@ const Account = () => (
             </CardActions>
           </Grid>
         </form>
+        )}
+        </Formik>
       </Card>
     )}
   </AuthConsumer>
