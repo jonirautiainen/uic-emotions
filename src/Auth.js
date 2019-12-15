@@ -10,7 +10,8 @@ const exampleUser = {
 
 class AuthProvider extends Component {
   state = {
-    user: null
+    user: null,
+    reportsToday: 0
   }
 
   // Automatically log in if user in LocalStorage
@@ -62,8 +63,12 @@ class AuthProvider extends Component {
     }
   }
 
+  addReport = () => {
+    this.setState({ reportsToday: this.state.reportsToday+1 })
+  }
+
   render() {
-    const { user } = this.state
+    const { user, reportsToday } = this.state
     const { children } = this.props
     return (
       <Provider
@@ -72,7 +77,9 @@ class AuthProvider extends Component {
           login: this.login,
           signup: this.signup,
           logout: this.logout,
-          updateUser: this.updateUser
+          updateUser: this.updateUser,
+          reportsToday: reportsToday,
+          addReport: this.addReport
         }}
       >
         {children}
