@@ -29,8 +29,15 @@ return (
     {({ reportsToday, addReport }) => (
   <div className={styles['container']}>
     {reportsToday > 0 && <p style={{color: 'green'}}>You have submitted {reportsToday} reports today, feel free to add more!</p>}
-    {submitted ? <h2>Thank you for submitting!</h2> : (
-    <>
+    {submitted ?
+      <>
+      <h2>Thank you for submitting!</h2>
+      <Button variant="contained" color="primary" type="submit" onClick={() => {setSubmitted(false)}}>
+      Submit more
+      </Button>
+      </>
+      : (
+      <>
     <h2>How are you feeling today?</h2>
     <Formik
       initialValues={{
@@ -83,6 +90,7 @@ return (
               key={emojiText}
               variant="text"
               type="button"
+              style={{ fontSize: '32px'}}
               onClick={() => appendEmoji(
                 values,
                 setFieldValue,
@@ -91,8 +99,6 @@ return (
               {emoji.getUnicode(emojiText)}
             </Button>
           ))}
-
-
           {[
             {
               label: 'Emoji field',
