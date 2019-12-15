@@ -2,3 +2,30 @@
   padding: 30px;
   text-align: center;
 }
+
+.input-container {
+  width: 100%;
+  padding: 12px 0;
+}
+
+.title {
+  font-weight: 900;
+  text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+.pg {
+  font-size: 15px;
+}
+
+.button-container {
+  padding: 15px 0;
+}
+
+.login-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  .pg {
+    margin-bottom: 5px;
+  }
+}

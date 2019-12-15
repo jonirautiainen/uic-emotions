@@ -7,11 +7,36 @@ import { Formik } from 'formik'
 
 import styles from './Signup.module.scss'
 
+const validate = (values) => {
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = 'Required';
+  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+    errors.email = 'Invalid email address';
+  }
+
+  if(!values.givenName) {
+    errors.givenName = 'Required'
+  }
+  if(!values.familyName) {
+    errors.familyName = 'Required'
+  }
+  if(!values.password) {
+    errors.password = 'Please create password'
+  }
+
+  return errors;
+};
+
 const Signup = () => (
   <AuthConsumer>
     {({ signup }) => (
       <div className={styles['container']}>
-        <h1>SIGNUP</h1>
+        <h2 className={styles['title']}>
+          Create Account
+        </h2>
+        <p className={styles['pg']}>By registering, you can easily track your daily emotions and view them summarised.</p>
         <Formik
           initialValues={{
             givenName: '',
@@ -26,9 +51,13 @@ const Signup = () => (
               email: values.email
             })
           }}
+          validate={validate}
         >
-          {({ handleSubmit, values, handleChange }) => (
-            <form onSubmit={handleSubmit}>
+          {({ handleSubmit, values, handleChange, errors, handleBlur, touched }) => (
+            <form 
+              onSubmit={handleSubmit}
+              className={styles['form']}
+            >
               {[
                 {
                   label: 'Given Name',
@@ -53,25 +82,33 @@ const Signup = () => (
               ].map(({ label, name, type }) => (
                 <div key={name} className={styles['input-container']}>
                   <TextField
+                    fullWidth
                     name={name}
                     type={type}
                     label={label}
                     variant="outlined"
                     value={values[name]}
                     onChange={handleChange}
+                    error={touched[name] && errors[name]}
+                    helperText={touched[name] && errors[name] ? errors[name] : ''}
+                    onBlur={handleBlur}
                   />
                 </div>
               ))}
-              <Button variant="contained" color="primary" type="submit">
+              <div className={styles['button-container']}>
+              <Button fullWidth variant="contained" color="primary" type="submit">
                 Signup
               </Button>
+              </div>
             </form>
           )}
         </Formik>
-
-        <Button component={Link} to="/login">
-          Go to login
-        </Button>
+        <div className={styles['login-container']}>
+          <p className={styles['pg']}>If you already have an account</p>
+          <Button component={Link} to="/login">
+            Login
+          </Button>
+        </div>
       </div>
     )}
   </AuthConsumer>
