@@ -78,7 +78,8 @@ class AuthProvider extends Component {
           signup: this.signup,
           logout: this.logout,
           updateUser: this.updateUser,
-          reportsToday: reportsToday
+          reportsToday: reportsToday,
+          addReport: this.addReport
         }}
       >
         {children}

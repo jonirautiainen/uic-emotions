@@ -106,6 +106,7 @@ return (
           ].map(({ label, name, type }) => (
             <div key={name} className={styles['input-container']}>
               <TextField
+                fullWidth
                 name={name}
                 type={type}
                 label={label}
