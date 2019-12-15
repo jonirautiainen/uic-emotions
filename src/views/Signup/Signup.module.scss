@@ -1,6 +1,6 @@
 .container {
   height: 100vh;
-  padding: 0 40px;
+  padding: 10px 40px;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -16,6 +16,11 @@
 .title {
   font-weight: 900;
   text-transform: uppercase;
+  margin-bottom: 0px;
+}
+
+.pg {
+  font-size: 15px;
 }
 
 .form {
@@ -32,4 +37,17 @@
 .input-container {
   width: 100%;
   padding: 12px 0;
+}
+
+.button-container {
+  width: 100%;
+  padding: 15px;
+}
+
+.login-container {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  .pg {
+    margin-bottom: 5px;
+  }
 }
