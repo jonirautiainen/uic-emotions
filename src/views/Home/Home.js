@@ -6,6 +6,7 @@ import { Formik } from 'formik'
 import Grid from '@material-ui/core/Grid';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import { AuthConsumer } from '../../Auth'
 
 import styles from './Home.module.scss'
 
@@ -22,15 +23,13 @@ const appendEmoji = (values, setFieldValue, emoji) => {
   setFieldValue('emojis', values.emojis+emoji)
 };
 
-const handleSubmit = (values, {resetForm}) => {
-  alert("Thx XD")
-  resetForm()
-}
-
 const Home = () => {
   const classes = useStyles();
 return (
+  <AuthConsumer>
+    {({ reportsToday, addReport }) => (
   <div className={styles['container']}>
+    {reportsToday > 0 && <p>Y have submitted today submit more pls</p>}
     <h2>How are you feeling today?</h2>
     <Formik
       initialValues={{
@@ -38,7 +37,11 @@ return (
         emojis: '',
         freetext: ''
       }}
-      onSubmit={handleSubmit}
+      onSubmit={(values, {resetForm}) => {
+        addReport()
+        alert("Thx XD")
+        resetForm()
+      }}
     >
       {({ handleSubmit, values, handleChange, setFieldValue }) => (
         <form onSubmit={handleSubmit}>
@@ -119,6 +122,8 @@ return (
       )}
     </Formik>
   </div>
+      )}
+      </AuthConsumer>
 )
 }
 
