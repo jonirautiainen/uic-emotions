@@ -17,73 +17,78 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function appendEmoji(emoji) {
-  console.log(emoji);
+
+const appendEmoji = (values, setFieldValue, emoji) => {
+  setFieldValue('emojis', values.emojis+emoji)
 };
 
-function ToggleButtons() {
-  const [emotion, setEmotion] = React.useState('good');
-  const handleClick = (event, newEmotion) => {
-    setEmotion(newEmotion)
-  };
-
-  const classes = useStyles();
-  return(
-        <div className={classes.toggleContainer}>
-          <ToggleButtonGroup
-                  value={emotion}
-                  exclusive
-                  onChange={handleClick}
-          >
-            <ToggleButton value="good">
-                Good
-              </ToggleButton>
-              <ToggleButton value="neutral">
-                Neutral
-              </ToggleButton>
-              <ToggleButton value="bad">
-                Bad
-              </ToggleButton>
-          </ToggleButtonGroup>
-        </div>
-  );
+const handleSubmit = (values, {resetForm}) => {
+  alert("Thx XD")
+  resetForm()
 }
 
-const Home = () => (
-  <div>
-    <h1>Home</h1>
-    <h2>How was your day? {emoji.getUnicode('smile')}</h2>
+const Home = () => {
+  const classes = useStyles();
+return (
+  <div className={styles['container']}>
+    <h2>How are you feeling today?</h2>
     <Formik
       initialValues={{
-        mood: '',
+        mood: 'good',
         emojis: '',
         freetext: ''
       }}
-      onSubmit={values => {
-        console.log(values.emojis, values.freetext, values)
-      }}
+      onSubmit={handleSubmit}
     >
-      {({ handleSubmit, values, handleChange }) => (
+      {({ handleSubmit, values, handleChange, setFieldValue }) => (
         <form onSubmit={handleSubmit}>
-          { ToggleButtons() }
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('blush')}
-          </Button>
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('smile')}
-          </Button>
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('relaxed')}
-          </Button>
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('neutral_face')}
-          </Button>
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('unamused')}
-          </Button>
-          <Button variant="text" type="button" onClick="">
-            {emoji.getUnicode('worried')}
-          </Button>
+
+          <div className={classes.toggleContainer}>
+            <ToggleButtonGroup
+                    value={values.mood}
+                    exclusive
+            >
+              {[
+                { value: 'good', name: 'Good' },
+                { value: 'neutral', name: 'Neutral' },
+                { value: 'bad', name: 'Bad' }
+              ].map(({ value, name }) => (
+                <ToggleButton
+                  key={name}
+                  value={value}
+                  onClick={() => {
+                    setFieldValue('mood', value)
+                  }}
+                >
+                  {name}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </div>
+
+          <h3>Pick emoji to represent your day:</h3>
+
+          {[
+            { emojiText: 'blush' },
+            { emojiText: 'smile' },
+            { emojiText: 'neutral_face' },
+            { emojiText: 'unamused' },
+            { emojiText: 'worried' }
+          ].map(({ emojiText }) => (
+            <Button
+              key={emojiText}
+              variant="text"
+              type="button"
+              onClick={() => appendEmoji(
+                values,
+                setFieldValue,
+                emoji.getUnicode(emojiText)
+              )}>
+              {emoji.getUnicode(emojiText)}
+            </Button>
+          ))}
+
+
           {[
             {
               label: 'Emoji field',
@@ -115,5 +120,6 @@ const Home = () => (
     </Formik>
   </div>
 )
+}
 
 export default Home
