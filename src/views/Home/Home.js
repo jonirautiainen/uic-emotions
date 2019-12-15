@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
@@ -17,18 +17,20 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-
 const appendEmoji = (values, setFieldValue, emoji) => {
   setFieldValue('emojis', values.emojis+emoji)
 };
 
 const Home = () => {
   const classes = useStyles();
+  const [submitted, setSubmitted] = useState(false);
 return (
   <AuthConsumer>
     {({ reportsToday, addReport }) => (
   <div className={styles['container']}>
-    {reportsToday > 0 && <p>Y have submitted today submit more pls</p>}
+    {reportsToday > 0 && <p style={{color: 'green'}}>You have submitted {reportsToday} reports today, feel free to add more!</p>}
+    {submitted ? <h2>Thank you for submitting!</h2> : (
+    <>
     <h2>How are you feeling today?</h2>
     <Formik
       initialValues={{
@@ -38,7 +40,7 @@ return (
       }}
       onSubmit={(values, {resetForm}) => {
         addReport()
-        alert("Thx XD")
+        setSubmitted(true);
         resetForm()
       }}
     >
@@ -121,6 +123,8 @@ return (
         </form>
       )}
     </Formik>
+    </>
+  )}
   </div>
       )}
       </AuthConsumer>
