@@ -89,8 +89,8 @@ const Signup = () => (
                     variant="outlined"
                     value={values[name]}
                     onChange={handleChange}
-                    error={touched[name] && errors[name]}
-                    helperText={touched[name] && errors[name] ? errors[name] : ''}
+                    error={touched[name] && !!errors[name]}
+                    helperText={touched[name] && !!errors[name] ? errors[name] : ''}
                     onBlur={handleBlur}
                   />
                 </div>
